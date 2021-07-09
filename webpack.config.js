@@ -1,8 +1,7 @@
 const path=require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ProjectNamePlugin=require('./src/plugin-my');
-const project=require('./package.json');
-const projectName=project.name;
+const MiniCssExtractPlugin=require('mini-css-extract-plugin');
+
 module.exports={
     mode:'development',
     entry: './index',
@@ -20,15 +19,16 @@ module.exports={
                     exclude:/node_modules/,
                     presets:[
                         ['@babel/preset-env'],
-                        ['@babel/preset-react']
-                    ]
+                        ['@babel/preset-react'],
+                    ],
+                    cacheDirectory:true
                 }
 
 
             },
             {
                 test:/\.css$/,
-                use:['style-loader','css-loader']
+                use:[MiniCssExtractPlugin.loader,'css-loader']
 
             },
             {
@@ -71,6 +71,7 @@ module.exports={
             }
 
         ),
+        new MiniCssExtractPlugin(),
         // new ProjectNamePlugin()
     ]
 
